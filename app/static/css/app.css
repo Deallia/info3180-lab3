@@ -1,3 +1,15 @@
 body {
     padding-top: 5rem;
 }
+#hint{
+    font-size: 14px;
+}
+.form-control{
+    width:350px;
+    margin-bottom:20px;
+    font-size: 14px;
+}
+
+.form-label{
+    font-weight: 500;
+}

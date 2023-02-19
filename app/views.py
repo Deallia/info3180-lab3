@@ -1,5 +1,10 @@
 from app import app
+from .forms import ContactForm
+
 from flask import render_template, request, redirect, url_for, flash
+
+from app import mail
+from flask_mail import Message
 
 
 ###
@@ -21,6 +26,22 @@ def about():
 ###
 # The functions below should be applicable to all Flask apps.
 ###
+@app.route('/contact', methods=['GET','POST'])
+def contact():
+    """Render the website's contact page."""
+    form = ContactForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+             # process the data
+            msg = Message(form.subject.data , 
+            sender=(form.name.data, form.email.data),
+            recipients=["to@example.com"])
+            msg.body = form.message.data
+            mail.send(msg)
+            flash("Your email was sent successfully.","success")
+    return render_template('contact.html',  form=form)
+
+
 
 
 # Flash errors from the form if validation fails
